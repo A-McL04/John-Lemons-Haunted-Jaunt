@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,12 +13,17 @@ public class PlayerMovement : MonoBehaviour
     Vector3 m_Movement;
     Quaternion m_Rotation = Quaternion.identity;
 
+    Scene currentScene;
+    string sceneName;
+
 
     void Start()
     {
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody>();
         m_AudioSource = GetComponent<AudioSource>();
+        currentScene = SceneManager.GetActiveScene();
+        sceneName = currentScene.name;
     }
 
     
@@ -52,7 +58,20 @@ public class PlayerMovement : MonoBehaviour
 
     void OnAnimatorMove()
     {
-        m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
+        if (sceneName == "MainScene")
+        {
+            m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
+        }
+        else if (sceneName == "ChaseScene" && Input.GetKey(KeyCode.LeftShift))
+        {
+            
+            m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * 1.5f * m_Animator.deltaPosition.magnitude);
+        }
+        else if (sceneName == "ChaseScene")
+        {
+            m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
+        }
+
         m_Rigidbody.MoveRotation(m_Rotation);
     }
 }
