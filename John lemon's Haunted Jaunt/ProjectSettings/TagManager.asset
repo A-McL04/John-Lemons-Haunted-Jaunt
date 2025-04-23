@@ -7,6 +7,12 @@ TagManager:
   - IntroDialogue
   - BathroomDialogue
   - EndMainScene
+  - Camera1
+  - Camera2
+  - Camera3
+  - Camera4
+  - Camera5
+  - Camera6
   layers:
   - Default
   - TransparentFX
